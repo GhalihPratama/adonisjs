@@ -37,11 +37,11 @@ const databaseConfig: DatabaseConfig & { orm: Partial<OrmConfig> } = {
     mysql: {
       client: 'mysql',
       connection: {
-        host: Env.get('MYSQL_HOST'),
-        port: Env.get('MYSQL_PORT'),
-        user: Env.get('MYSQL_USER'),
+        host: Env.get('MYSQL_HOST', '127.0.0.1') as string,
+        port: Number(Env.get('MYSQL_PORT', 3360)),
+        user: Env.get('MYSQL_USER', 'root') as string,
         password: Env.get('MYSQL_PASSWORD', ''),
-        database: Env.get('MYSQL_DB_NAME'),
+        database: Env.get('MYSQL_DB_NAME', 'taskist') as string,
       },
       healthCheck: false,
 			debug: false,
