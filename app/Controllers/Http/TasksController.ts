@@ -30,4 +30,25 @@ export default class TasksController {
 
         return response.redirect('back')
     }
+
+    public async update({ request, response, session, params }: HttpContextContract){
+        const task = await Task.findOrFail(params.id)
+        
+        task.isCompleted = !!request.input('completed')
+        await task.save()
+
+        session.flash('notification', 'Task updated!')
+
+        return response.redirect('back')
+    }
+
+    public async destroy({params, session, response}: HttpContextContract){
+        const task = await Task.findOrFail(params.id)
+
+        await task.delete()
+
+        session.flash('notification', 'Task deleted!')
+
+        return response.redirect('back')
+    }
 }
